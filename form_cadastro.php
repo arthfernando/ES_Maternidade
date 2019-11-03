@@ -1,21 +1,32 @@
-<?php require_once("conexao/conexao.php") ?>
-
 <?php
+
 $msg = "";
-if(isset($_POST["enviar"])) {
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    function MyAutoLoad($className) {
+        $extension = spl_autoload_extensions();
+        require_once('classes/' . $className . $extension);
+    }
+
+    spl_autoload_extensions('.class.php');
+    spl_autoload_register('MyAutoLoad');
 
     $nomegest = $_POST["nome_gestante"];
     $cpfgest = $_POST["cpf_gestante"];
     $datagest = $_POST["nasc_gestante"];
     $telegest = $_POST["telefone"];
 
-    $nomeacomp = $_POST["nome_acomp"];
+    $crm = $_POST["crm_medico"];
+
+    $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
+    $msg = $gest->save();
+/*    $nomeacomp = $_POST["nome_acomp"];
     $cpfacomp = $_POST["cpf_acomp"];
     $dataacomp = $_POST["nasc_acomp"];
     $parentesco = $_POST["parentesco"];
 
     $nomemed = $_POST["nome_medico"];
-    $crm = $_POST["crm_medico"];
 
     $regbebe = $_POST["reg_bebe"];
     $nomebebe = $_POST["nome_bebe"];
@@ -35,7 +46,7 @@ if(isset($_POST["enviar"])) {
         return $msg;
     } else {
 
-        $sql_gest = "INSERT INTO gestante (cpf, nome, data_nasc, telefone, crm_medico) VALUES ('" . $cpfgest . "','" . $nomegest . "','" . $datagest . "','" . $telegest . "','" . $crm . "')";
+        
 
         $sql_pessoa = "INSERT INTO pessoa (cpf, nome, parentesco, data_nasc, cpf_gestante) VALUES ('" . $cpfacomp . "','" . $nomeacomp . "','" . $parentesco . "','" . $dataacomp . "','" . $cpfgest . "')";
 
@@ -91,7 +102,7 @@ if(isset($_POST["enviar"])) {
     }
 
     echo $msg;
-
+*/
 }
 
 ?>
@@ -105,7 +116,7 @@ if(isset($_POST["enviar"])) {
 
     <body>
         <main>
-            <form action="form_cadastro.php" method="POST">
+            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
             <h2> - Dados do Paciente</h2>
                 <h4>Nome do Paciente:</h4>
                 <input type="text" name="nome_gestante" placeholder="Nome Completo" required>
@@ -114,9 +125,9 @@ if(isset($_POST["enviar"])) {
                 <h4>Data de Nascimento:</h4>
                 <input type="date" name="nasc_gestante" required>
                 <h4>Telefone para Contato:</h4>
-                <input type="tel" name="telefone" placeholder="DDD-XXXXXXXX" pattern="[0-9]{3}-[0-9]{8}" required>
+                <input type="text" name="telefone" placeholder="DDD-XXXXXXXX"  required>
 
-            <h2> - Dados do Acompanhante</h2>
+            <!-- <h2> - Dados do Acompanhante</h2>
                 <h4>Nome do Acompanhante:</h4>
                 <input type="text" name="nome_acomp" placeholder="Nome Completo" required>
                 <h4>CPF do Acompanhante:</h4>
@@ -124,15 +135,15 @@ if(isset($_POST["enviar"])) {
                 <h4>Data de Nascimento:</h4>
                 <input type="date" name="nasc_acomp" required>
                 <h4>Relação de Parentesco:</h4>
-                <input type="text" name="parentesco" placeholder="Parentesco" required>
+                <input type="text" name="parentesco" placeholder="Parentesco" required> -->
 
-            <h2> - Dados do Médico Responsável</h2>
+            <!-- <h2> - Dados do Médico Responsável</h2>
                 <h4>Nome do Médico:</h4>
-                <input type="text" name="nome_medico" placeholder="Nome do Médico" required>
+                <input type="text" name="nome_medico" placeholder="Nome do Médico" required> -->
                 <h4>Nº do CRM:</h4>
                 <input type="text" name="crm_medico" placeholder="CRM" required>
             
-            <h2> - Dados do Recém Nascido </h2>
+            <!-- <h2> - Dados do Recém Nascido </h2>
                 <h4>Nº de Registro:</h4>
                 <input type="text" name="reg_bebe" placeholder="XXXXXX" required>
                 <h4>Nome do Recém Nascido:</h4>
@@ -161,7 +172,7 @@ if(isset($_POST["enviar"])) {
                 <input type="text" name="num_bercario" required>
                 <h4>Nº Berço:</h4>
                 <input type="text" name="num_berco" required>
-                
+                 -->
             <br><br><br>
             <input type="submit" name="enviar" value="Cadastrar">
 
@@ -171,5 +182,3 @@ if(isset($_POST["enviar"])) {
         </main>
     </body>
 </html>
-
-<?php mysqli_close($conecta) ?>
