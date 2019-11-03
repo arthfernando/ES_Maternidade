@@ -11,4 +11,5 @@ if( mysqli_connect_errno() ) {
     die("Conexão com o banco falhou " . mysqli_close_errno());
 }
 
+
 ?>
