@@ -17,18 +17,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $datagest = $_POST["nasc_gestante"];
     $telegest = $_POST["telefone"];
 
+    $nomemed = $_POST["nome_medico"];
     $crm = $_POST["crm_medico"];
 
-    $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
-    $msg = $gest->save();
-/*    $nomeacomp = $_POST["nome_acomp"];
+    $nomeacomp = $_POST["nome_acomp"];
     $cpfacomp = $_POST["cpf_acomp"];
     $dataacomp = $_POST["nasc_acomp"];
     $parentesco = $_POST["parentesco"];
 
-    $nomemed = $_POST["nome_medico"];
-
-    $regbebe = $_POST["reg_bebe"];
     $nomebebe = $_POST["nome_bebe"];
     $pesobebe = $_POST["peso_bebe"];
     $alturabebe = $_POST["altura_bebe"];
@@ -37,72 +33,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $hora_bebe = $_POST["hora_bebe"];
     $tipo_parto = $_POST["tipo_parto"];
 
-    $numbercario = $_POST["num_bercario"];
-    $numberco = $_POST["num_berco"];
-
+    $med = new Medico($crm, $nomemed);
+    $msg = $med->save();
     
-    if(!$conecta) {
-        $msg = "Falha na conexão";
-        return $msg;
-    } else {
+    $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
+    $msg = $gest->save();
 
-        
+    $pessoa = new Pessoa($nomeacomp, $cpfacomp, $dataacomp, $parentesco);
+    $msg = $pessoa->save();
 
-        $sql_pessoa = "INSERT INTO pessoa (cpf, nome, parentesco, data_nasc, cpf_gestante) VALUES ('" . $cpfacomp . "','" . $nomeacomp . "','" . $parentesco . "','" . $dataacomp . "','" . $cpfgest . "')";
+    $bercario = new Bercario($numbercario, $numberco);
+    $msg = $bercario->save();
 
-        $sql_med = "INSERT INTO gestante (crm, nome) VALUES ('" . $crm . "','" . $nomemed . "')";
+    $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto);
+    $msg = $bebe->save();
 
-        $sql_bebe = "INSERT INTO gestante (reg_bebe, nome, peso, sexo, altura, data_nasc, hora_nasc, tipo_parto, cpf_gestante, num_bercario) VALUES ('" . $regbebe . "','" . $nomebebe . "','" . $pesobebe . "','" . $sexo_bebe . "','" . $alturabebe . "','" . $nasc_bebe . "','" . $hora_bebe . "','" . $tipo_parto . "','" . $cpfgest . "','" . $numbercario . "')";
-        
-        $sql_bercario = "INSERT INTO bercario (num_bercario, num_berco) VALUES ('" . $numbercario . "','" . $numberco . "')";
+    $contato = new Contato($telegest, $cpfacomp, $cpfacomp);
+    $msg = $contato->save();
 
-        $sql_contato = "INSERT INTO contato (telefone, cpf_gestante, cpf_pessoa) VALUES ('" . $telegest . "','" . $cpfgest . "','" . $cpfgest . "')";
-
-        if(mysqli_query($conecta, $sql_gest)) {
-            $msg = "Dados inseridos em gestante com sucesso!";
-        } else {
-            $msg = $sql_gest;
-            return $msg;
-        }
-
-        if(mysqli_query($conecta, $sql_pessoa)) {
-            $msg = "Dados inseridos em pessoa com sucesso!";
-        } else {
-            $msg = $sql_pessoa;
-            return $msg;
-        }
-
-        if(mysqli_query($conecta, $sql_med)) {
-            $msg = "Dados inseridos em medico com sucesso!";
-        } else {
-            $msg = $sql_med;
-            return $msg;
-        }
-
-        if(mysqli_query($conecta, $sql_bebe)) {
-            $msg = "Dados inseridos em bebe com sucesso!";
-        } else {
-            $msg = $sql_bebe;
-            return $msg;
-        }
-
-        if(mysqli_query($conecta, $sql_bercario)) {
-            $msg = "Dados inseridos em bercario com sucesso!";
-        } else {
-            $msg = $sql_bercario;
-            return $msg;
-        }
-
-        if(mysqli_query($conecta, $sql_contato)) {
-            $msg = "Dados inseridos com sucesso!";
-        } else {
-            $msg = $sql_contato;
-            return $msg;
-        }
-    }
-
-    echo $msg;
-*/
 }
 
 ?>
@@ -125,9 +73,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Data de Nascimento:</h4>
                 <input type="date" name="nasc_gestante" required>
                 <h4>Telefone para Contato:</h4>
-                <input type="text" name="telefone" placeholder="DDD-XXXXXXXX"  required>
+                <input type="text" name="telefone" placeholder="DDD-XXXXXXXX" pattern="[0-9]{11}" required>
 
-            <!-- <h2> - Dados do Acompanhante</h2>
+            <h2> - Dados do Acompanhante</h2>
                 <h4>Nome do Acompanhante:</h4>
                 <input type="text" name="nome_acomp" placeholder="Nome Completo" required>
                 <h4>CPF do Acompanhante:</h4>
@@ -135,17 +83,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Data de Nascimento:</h4>
                 <input type="date" name="nasc_acomp" required>
                 <h4>Relação de Parentesco:</h4>
-                <input type="text" name="parentesco" placeholder="Parentesco" required> -->
+                <input type="text" name="parentesco" placeholder="Parentesco" required>
 
-            <!-- <h2> - Dados do Médico Responsável</h2>
+            <h2> - Dados do Médico Responsável</h2>
                 <h4>Nome do Médico:</h4>
-                <input type="text" name="nome_medico" placeholder="Nome do Médico" required> -->
+                <input type="text" name="nome_medico" placeholder="Nome do Médico" required>
                 <h4>Nº do CRM:</h4>
                 <input type="text" name="crm_medico" placeholder="CRM" required>
             
-            <!-- <h2> - Dados do Recém Nascido </h2>
-                <h4>Nº de Registro:</h4>
-                <input type="text" name="reg_bebe" placeholder="XXXXXX" required>
+            <h2> - Dados do Recém Nascido </h2>
                 <h4>Nome do Recém Nascido:</h4>
                 <input type="text" name="nome_bebe" placeholder="Nome Completo" required>
                 <h4>Peso:</h4>
@@ -169,10 +115,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="1"> Cesárea </option>
                 </select>
                 <h4>Nº Berçário:</h4>
-                <input type="text" name="num_bercario" required>
+                <input type="number" name="num_bercario" required>
                 <h4>Nº Berço:</h4>
-                <input type="text" name="num_berco" required>
-                 -->
+                <input type="number" name="num_berco" required>
+                
             <br><br><br>
             <input type="submit" name="enviar" value="Cadastrar">
 

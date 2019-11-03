@@ -1,0 +1,31 @@
+<?php
+
+class Medico {
+    private $nomemed;
+    private $crm;
+
+    public function __construct($c, $n) {
+        $this->crm = $c;
+        $this->nomemed = $n;
+    }
+
+    public function save() {
+        $conn = Connection::getInstance();
+
+        if(!$conn) {
+            $msg = "Falha na conexão.";
+        } else {
+            $sql = "INSERT INTO medico (crm, nome) VALUES ('" . $this->crm . "','" . $this->nomemed . "')";
+        }
+
+        if(mysqli_query($conn, $sql)) {
+            $msg = "Dados Inseridos.";
+        } else {
+            die(mysqli_error($conn));
+        }
+
+        return $msg;
+    }
+}
+
+?>

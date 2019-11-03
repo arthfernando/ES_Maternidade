@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 03-Nov-2019 às 15:08
+-- Tempo de geração: 03-Nov-2019 às 19:17
 -- Versão do servidor: 10.4.8-MariaDB
 -- versão do PHP: 7.3.10
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bebe` (
-  `reg_bebe` varchar(6) NOT NULL,
+  `reg_bebe` int(6) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `peso` float NOT NULL,
   `sexo` tinyint(1) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `gestante` (
   `cpf` varchar(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
   `data_nasc` date NOT NULL,
-  `telefone` varchar(6) NOT NULL,
+  `telefone` varchar(11) NOT NULL,
   `crm_medico` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -98,7 +98,7 @@ CREATE TABLE `medico` (
 CREATE TABLE `pessoa` (
   `cpf` varchar(11) NOT NULL,
   `nome` varchar(255) NOT NULL,
-  `parentesco` varchar(100) NOT NULL,
+  `parentesco` varchar(50) NOT NULL,
   `data_nasc` date NOT NULL,
   `cpf_gestante` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -147,6 +147,16 @@ ALTER TABLE `medico`
 ALTER TABLE `pessoa`
   ADD PRIMARY KEY (`cpf`),
   ADD KEY `fk_acompanha` (`cpf_gestante`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `bebe`
+--
+ALTER TABLE `bebe`
+  MODIFY `reg_bebe` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para despejos de tabelas

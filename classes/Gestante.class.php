@@ -19,15 +19,15 @@ class Gestante {
         $conn = Connection::getInstance();
 
         if(!$conn) {
-            $msg = "Problema na Conexão";
+            $msg = "Falha na conexão";
         } else {
             $sql = "INSERT INTO gestante (cpf, nome, data_nasc, telefone, crm_medico) VALUES ('" . $this->cpfgest . "','" . $this->nomegest . "','" . $this->datagest . "','" . $this->telegest . "','" . $this->crmmed . "')";
         }
 
         if(mysqli_query($conn, $sql)) {
-            $msg = "Dados Inseridos em Gestante";
+            $msg = "Dados Inseridos.";
         } else {
-            $msg = $sql;
+            die(mysqli_error($conn));
         }
 
         return $msg;
