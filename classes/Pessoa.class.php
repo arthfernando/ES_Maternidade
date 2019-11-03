@@ -2,16 +2,18 @@
 
 class Pessoa {
     
-    private $nomeacomp;
     private $cpfacomp;
-    private $dataacomp;
+    private $nomeacomp;
     private $parentesco;
+    private $dataacomp;
+    private $cpfgest;
 
-    public function __construct($n, $cpf, $d, $p) {
-        $this->nomeacomp = $n;
+    public function __construct($n, $cpf, $d, $p, $gest) {
         $this->cpfacomp = $cpf;
-        $this->dataacomp = $d;
+        $this->nomeacomp = $n;
         $this->parentesco = $p;
+        $this->dataacomp = $d;
+        $this->cpfgest = $gest;
     }
 
     public function save() {
@@ -20,7 +22,7 @@ class Pessoa {
         if(!$conn) {
             $msg = "Falha na conexão.";
         } else {
-            $sql = "INSERT INTO pessoa (cpf, nome, parentesco, data_nasc, cpf_gestante) VALUES ('" . $this->cpfacomp . "','" . $this->nomeacomp . "','" . $this->parentesco . "','" . $this->dataacomp . "')";
+            $sql = "INSERT INTO pessoa (cpf, nome, parentesco, data_nasc, cpf_gestante) VALUES ('" . $this->cpfacomp . "','" . $this->nomeacomp . "','" . $this->parentesco . "','" . $this->dataacomp . "','" . $this->cpfgest . "')";
         }
 
         if(mysqli_query($conn, $sql)) {

@@ -17,7 +17,7 @@ class Contato {
         if(!$conn) {
             $msg = "Falha na conexão.";
         } else {
-            $sql_contato = "INSERT INTO contato (telefone, cpf_gestante, cpf_pessoa) VALUES ('" . $this->tel . "','" . $this->cpf_g . "','" . $this->cpf_p . "')";
+            $sql = "INSERT INTO contato (telefone, cpf_gestante, cpf_pessoa) VALUES ('" . $this->tel . "','" . $this->cpf_g . "','" . $this->cpf_p . "')";
         }
 
         if(mysqli_query($conn, $sql)) {

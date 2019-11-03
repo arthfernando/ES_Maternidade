@@ -33,23 +33,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $hora_bebe = $_POST["hora_bebe"];
     $tipo_parto = $_POST["tipo_parto"];
 
+    $numbercario = $_POST["num_bercario"];
+    $numberco = $_POST["num_berco"];
+
     $med = new Medico($crm, $nomemed);
     $msg = $med->save();
-    
+
     $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
     $msg = $gest->save();
 
-    $pessoa = new Pessoa($nomeacomp, $cpfacomp, $dataacomp, $parentesco);
+    $contato = new Contato($telegest, $cpfgest, $cpfacomp);
+    $msg = $contato->save();
+
+    $pessoa = new Pessoa($nomeacomp, $cpfacomp, $dataacomp, $parentesco, $cpfgest);
     $msg = $pessoa->save();
 
     $bercario = new Bercario($numbercario, $numberco);
     $msg = $bercario->save();
 
-    $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto);
+    $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto, $cpfgest, $numbercario);
     $msg = $bebe->save();
 
-    $contato = new Contato($telegest, $cpfacomp, $cpfacomp);
-    $msg = $contato->save();
 
 }
 
@@ -73,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h4>Data de Nascimento:</h4>
                 <input type="date" name="nasc_gestante" required>
                 <h4>Telefone para Contato:</h4>
-                <input type="text" name="telefone" placeholder="DDD-XXXXXXXX" pattern="[0-9]{11}" required>
+                <input type="text" name="telefone" placeholder="DDDXXXXXXXX" pattern="[0-9]{11}" required>
 
             <h2> - Dados do Acompanhante</h2>
                 <h4>Nome do Acompanhante:</h4>
@@ -121,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 
             <br><br><br>
             <input type="submit" name="enviar" value="Cadastrar">
-
+            <br><br>
             <label for="msg">Mensagem:<font color="#AA0000"><?php echo $msg; ?></font>
                 
             </form>
