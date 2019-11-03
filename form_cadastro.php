@@ -67,6 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     </head>
 
     <body>
+    <a href="index.php">Voltar</a><br><br>
         <main>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
             <h2> - Dados do Paciente</h2>
@@ -126,9 +127,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <br><br><br>
             <input type="submit" name="enviar" value="Cadastrar">
             <br><br>
-            <label for="msg">Mensagem:<font color="#AA0000"><?php echo $msg; ?></font>
                 
             </form>
         </main>
+        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>

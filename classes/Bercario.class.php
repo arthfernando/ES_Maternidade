@@ -6,7 +6,7 @@ class Bercario {
 
     public function __construct($num_bercario, $num_berco) {
         $this->num_bercario = $num_bercario;
-        $this->num_berco = $num_bercario;
+        $this->num_berco = $num_berco;
     }
 
     public function save() {

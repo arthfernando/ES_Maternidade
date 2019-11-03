@@ -26,6 +26,14 @@ class Medico {
 
         return $msg;
     }
+
+    public function getCRM() {
+        return $this->crm;
+    }
+
+    public function getNome() {
+        return $this->nomemed;
+    }
 }
 
 ?>
