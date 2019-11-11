@@ -14,16 +14,7 @@ if(!$conn) {
     die("Conexao falhou.");
 } else {
     $sql = "SELECT * FROM medico";
-    $result = mysqli_query($conn, $sql);
-    
-    // if($result->num_rows > 0) {
-    //     while($row = $result->fetch_assoc()) {
-    //         echo "CRM: " . $row["crm"] . " - Nome: " . $row["nome"] . "<br>";
-    //     }
-    // } else {
-    //     echo "Nenhum resultado.";
-    // }
-// }
+    $result = pg_query($conn, $sql);
 ?>
 
 <!doctype html>
@@ -37,8 +28,7 @@ if(!$conn) {
     <a href="index.php">Voltar</a><br><br>
         <main>
         <?php
-            if($result->num_rows > 0) {
-                
+            if(pg_num_rows($result) > 0) {
         ?>
         <table style="width:50%">
             <tr>
@@ -58,6 +48,10 @@ if(!$conn) {
             </tr>
             <?php
                     }
+                } else {
+            ?>
+                <h2>Nenhum resultado encontrado</h2>
+            <?php
                 }
             }
             ?>

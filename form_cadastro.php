@@ -42,11 +42,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
     $msg = $gest->save();
 
-    $contato = new Contato($telegest, $cpfgest, $cpfacomp);
-    $msg = $contato->save();
-
     $pessoa = new Pessoa($nomeacomp, $cpfacomp, $dataacomp, $parentesco, $cpfgest);
     $msg = $pessoa->save();
+
+    $contato = new Contato($telegest, $cpfgest, $cpfacomp);
+    $msg = $contato->save();
 
     $bercario = new Bercario($numbercario, $numberco);
     $msg = $bercario->save();

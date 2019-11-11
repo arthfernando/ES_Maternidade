@@ -2,12 +2,8 @@
 
 class Connection {
     public function getInstance() {
-        $servidor = "localhost";
-        $usuario = "root";
-        $senha = "";
-        $banco = "maternidade";
 
-        $conn = mysqli_connect($servidor,$usuario, $senha, $banco);
+        $conn = pg_connect("host=localhost port=5432 dbname=maternidade user=postgres password=1234");
 
         if(!$conn) {
             $conn = NULL;
@@ -17,7 +13,7 @@ class Connection {
     }
 
     public function closeInstance() {
-        mysqli_close($conn);
+        pg_close($conn);
     }
 }
 

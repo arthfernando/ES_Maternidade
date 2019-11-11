@@ -18,10 +18,10 @@ class Bercario {
             $sql = "INSERT INTO bercario (num_bercario, num_berco) VALUES ('" . $this->num_bercario . "','" . $this->num_berco . "')";
         }
 
-        if(mysqli_query($conn, $sql)) {
+        if(pg_query($conn, $sql)) {
             $msg = "Dados Inseridos.";
         } else {
-            die(mysqli_error($conn));
+            die(pg_result_error($conn));
         }
 
         return $msg;

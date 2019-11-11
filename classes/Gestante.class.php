@@ -24,10 +24,10 @@ class Gestante {
             $sql = "INSERT INTO gestante (cpf, nome, data_nasc, telefone, crm_medico) VALUES ('" . $this->cpfgest . "','" . $this->nomegest . "','" . $this->datagest . "','" . $this->telegest . "','" . $this->crmmed . "')";
         }
 
-        if(mysqli_query($conn, $sql)) {
+        if(pg_query($conn, $sql)) {
             $msg = "Dados Inseridos.";
         } else {
-            die(mysqli_error($conn));
+            die(pg_result_error($conn));
         }
 
         return $msg;

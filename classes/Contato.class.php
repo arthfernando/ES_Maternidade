@@ -20,10 +20,10 @@ class Contato {
             $sql = "INSERT INTO contato (telefone, cpf_gestante, cpf_pessoa) VALUES ('" . $this->tel . "','" . $this->cpf_g . "','" . $this->cpf_p . "')";
         }
 
-        if(mysqli_query($conn, $sql)) {
+        if(pg_query($conn, $sql)) {
             $msg = "Dados Inseridos.";
         } else {
-            die(mysqli_error($conn));
+            die(pg_result_error($conn));
         }
 
         return $msg;

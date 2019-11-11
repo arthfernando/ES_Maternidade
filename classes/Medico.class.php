@@ -18,10 +18,10 @@ class Medico {
             $sql = "INSERT INTO medico (crm, nome) VALUES ('" . $this->crm . "','" . $this->nomemed . "')";
         }
 
-        if(mysqli_query($conn, $sql)) {
+        if(pg_query($conn, $sql)) {
             $msg = "Dados Inseridos.";
         } else {
-            die(mysqli_error($conn));
+            die(pg_result_error($conn));
         }
 
         return $msg;
