@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $bercario = new Bercario($numbercario, $numberco);
     $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto, $cpfgest, $numbercario);
 
-    if($med->check() && $gest->check() && $pessoa->check() && $contato->check() && $bercario->check()) {
+    if($med->check() && $gest->check() && $pessoa->check() && $contato->check() && $bercario->check() && $bebe->check()) {
         $msg1 = $med->save();
         $msg2 = $gest->save();
         $msg3 = $pessoa->save();
