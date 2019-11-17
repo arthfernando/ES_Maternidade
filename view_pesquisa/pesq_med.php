@@ -16,6 +16,7 @@
             <br><br><br>
             <input type="submit" name="enviar" class="search" value="Pesquisar">
             <br><br>
+            </form>
         </main>
     </body>
 </html>
@@ -34,10 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     spl_autoload_extensions('.class.php');
     spl_autoload_register('MyAutoLoad');
 
-    $crm = $_POST["crm_medico"];
-
-    //$med = new Medico($crm);
-    //$msg = $med->save();
+    $crm = $_POST['crm_medico'];
 
     $form_result= $_POST['enviar'];
     $conn = Connection::getInstance();
@@ -48,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 die("Conexao falhou.");
             } 
             else {
-                $sql = "SELECT * FROM medico";
+                $sql = "SELECT * FROM medico WHERE crm = '" . $crm . "'";
                 $result = pg_query($conn, $sql);
                 if(pg_num_rows($result) > 0) {
                     echo "<div id='baixo'>";
@@ -59,8 +57,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "</tr>";
                     while($row = pg_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td class='acom6'>". $row["crm"] ."</td>";
-                        echo "<td class='acom6'>". $row["nome"]. "</td>";
+                        echo "<td class='acom6'>". $row['crm'] ."</td>";
+                        echo "<td class='acom6'>". $row['nome']. "</td>";
                         echo "</tr>";
                     }
                 } 

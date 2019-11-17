@@ -34,7 +34,6 @@
             <a class="index" href="view_pesquisa/pesq_gest.php">Pesquisar Gestante</a><br><br>
             <a class="index" href="view_pesquisa/pesq_acomp.php">Pesquisar Acompanhante</a><br><br>
             <a class="index" href="view_pesquisa/pesq_bebe.php">Pesquisar Recém Nascido</a><br><br>
-            <a class="index" href="view_pesquisa/pesq_berco.php">Pesquisar Berço</a><br><br>
             <a class="index" href="view_pesquisa/pesq_berca.php">Pesquisar Berçário</a><br><br>
 
             <a class="index" href="view_relat/num_bebe.php">Número de Recém Nascidos</a><br><br>
