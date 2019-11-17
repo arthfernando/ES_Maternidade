@@ -11,7 +11,7 @@ class Bebe {
     private $tipo_parto;
     private $cpfgest;
     private $numberc;
-    // private $error;
+    private $error;
 
     public function __construct($n, $p, $a, $s, $nasc, $h, $tp, $gest, $nb) {
         $this->nomebebe = $n;
@@ -23,7 +23,7 @@ class Bebe {
         $this->tipo_parto = $tp;
         $this->cpfgest = $gest;
         $this->numberc = $nb;
-        // $this->error = "";
+        $this->error = "";
     }
 
     public function save() {
@@ -40,23 +40,23 @@ class Bebe {
         return $msg;
     }
 
-    // public function check() {
-    //     $conn = Connection::getInstance();
-    //     $query = "SELECT crm FROM medico WHERE crm = '" . $this->crm . "'";
+    public function check() {
+        $conn = Connection::getInstance();
+        $query = "SELECT cpf_gestante FROM bebe, gestante WHERE bebe.'" . $this->cpfgestante . "' = gestante.cpf";
 
-    //     $result = pg_query($conn, $query);
+        $result = pg_query($conn, $query);
 
-    //     if(!pg_fetch_assoc($result)) {
-    //         return TRUE;
-    //     } else {
-    //         $this->error = "CRM já cadastrado.";
-    //         return FALSE;
-    //     }
-    // }
+        if(pg_fetch_assoc($result)) {
+            return TRUE;
+        } else {
+            $this->error = "CPF da Gestante não encontrado.";
+            return FALSE;
+        }
+    }
 
-    // public function getError() {
-    //     return $this->error;
-    // }   
+    public function getError() {
+        return $this->error;
+    }   
 }
 
 ?>
