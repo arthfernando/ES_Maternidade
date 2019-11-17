@@ -25,21 +25,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $datagest = $_POST["nasc_gestante"];
     $telegest = $_POST["telefone"];
 
-    // $nomeacomp = $_POST["nome_acomp"];
-    // $cpfacomp = $_POST["cpf_acomp"];
-    // $dataacomp = $_POST["nasc_acomp"];
-    // $parentesco = $_POST["parentesco"];
+    $nomeacomp = $_POST["nome_acomp"];
+    $cpfacomp = $_POST["cpf_acomp"];
+    $dataacomp = $_POST["nasc_acomp"];
+    $parentesco = $_POST["parentesco"];
 
-    // $nomebebe = $_POST["nome_bebe"];
-    // $pesobebe = $_POST["peso_bebe"];
-    // $alturabebe = $_POST["altura_bebe"];
-    // $sexo_bebe = $_POST["sexo_bebe"];
-    // $nasc_bebe = $_POST["nasc_bebe"];
-    // $hora_bebe = $_POST["hora_bebe"];
-    // $tipo_parto = $_POST["tipo_parto"];
+    $nomebebe = $_POST["nome_bebe"];
+    $pesobebe = $_POST["peso_bebe"];
+    $alturabebe = $_POST["altura_bebe"];
+    $sexo_bebe = $_POST["sexo_bebe"];
+    $nasc_bebe = $_POST["nasc_bebe"];
+    $hora_bebe = $_POST["hora_bebe"];
+    $tipo_parto = $_POST["tipo_parto"];
 
-    // $numbercario = $_POST["num_bercario"];
-    // $numberco = $_POST["num_berco"];
+    $numbercario = $_POST["num_bercario"];
+    $numberco = $_POST["num_berco"];
 
     $med = new Medico($crm, $nomemed);
     $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $bercario = new Bercario($numbercario, $numberco);
     $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto, $cpfgest, $numbercario);
 
-    if($med->check() && $gest->check() && $pessoa->check() && $contato->check() && $bercario->check() && $bebe->check()) {
+    if($med->check() && $gest->check() && $pessoa->check() && $contato->check() && $bercario->check()) {
         $msg1 = $med->save();
         $msg2 = $gest->save();
         $msg3 = $pessoa->save();
