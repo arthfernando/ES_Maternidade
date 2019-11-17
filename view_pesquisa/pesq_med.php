@@ -6,7 +6,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     function MyAutoLoad($className) {
         $extension = spl_autoload_extensions();
-        require_once('classes/' . $className . $extension);
+        require_once('../classes/' . $className . $extension);
     }
 
     spl_autoload_extensions('.class.php');
@@ -64,13 +64,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="UTF-8">
         <title>Pesquisar Médico</title>
-        <link rel="stylesheet" type="text/css" href="Style/style.css">
+        <link rel="stylesheet" type="text/css" href="/Style/style.css">
     </head>
 
     <body>
         <main>
         <h4 class="index2">Maternidade - Pesquisar Médico</h4>
-        <a class="back" href="index.php">Voltar</a><br><br>
+        <a class="back" href="../index.php">Voltar</a><br><br>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
                 <h4 class="enter">Entre com o nº do CRM</h4>
                 <input type="text" name="crm_medico" class="enter2" placeholder="CRM" required>

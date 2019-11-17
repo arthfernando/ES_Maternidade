@@ -2,7 +2,7 @@
 
 function MyAutoLoad($className) {
     $extension = spl_autoload_extensions();
-    require_once('classes/' . $className . $extension);
+    require_once('../classes/' . $className . $extension);
 }
 
 spl_autoload_extensions('.class.php');
@@ -23,13 +23,13 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Recém Nascido</title>
-        <link rel="stylesheet" type="text/css" href="Style/style.css">
+        <link rel="stylesheet" type="text/css" href="/Style/style.css">
     </head>
 
     <body>
         <main>
         <h4 class="index2">Maternidade - Recém Nascido</h4>
-        <a class="back" href="index.php">Voltar</a><br><br><br><br>
+        <a class="back" href="../index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
