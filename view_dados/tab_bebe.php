@@ -37,7 +37,7 @@ if(!$conn) {
             <tr>
                 <th class="acom2">Nº Registro</th>
                 <th class="acom2">Nome</th>
-                <th class="acom2">Peso</th>
+                <th class="acom2">Peso(kg)</th>
                 <th class="acom2">Sexo</th>
                 <th class="acom2">Altura</th>
                 <th class="acom2">Data de Nascimento</th>
@@ -61,7 +61,7 @@ if(!$conn) {
                 </td>
                 <td class="acom2">
                     <?php 
-                        if($row["sexo"] == 0) {
+                        if($row["sexo"] == "f") {
                             echo "Masculino";
                         } else {
                             echo "Feminino";
@@ -79,7 +79,7 @@ if(!$conn) {
                 </td>
                 <td class="acom2">
                     <?php 
-                        if($row["tipo_parto"] == 0) {
+                        if($row["tipo_parto"] == "f") {
                             echo "Normal";
                         } else {
                             echo "Cesárea";
