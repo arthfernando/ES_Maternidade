@@ -23,41 +23,43 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Recém Nascido</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Recém Nascido</h4>
+        <a class="back" href="index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
-        <table style="width:80%">
+        <table class="visu_acom2">
             <tr>
-                <th>Nº Registro</th>
-                <th>Nome</th>
-                <th>Peso</th>
-                <th>Sexo</th>
-                <th>Altura</th>
-                <th>Data de Nascimento</th>
-                <th>Hora de Nascimento</th>
-                <th>Tipo do Parto</th>
-                <th>CPF Gestante</th>
-                <th>Nº Berçário</th>
+                <th class="acom2">Nº Registro</th>
+                <th class="acom2">Nome</th>
+                <th class="acom2">Peso</th>
+                <th class="acom2">Sexo</th>
+                <th class="acom2">Altura</th>
+                <th class="acom2">Data de Nascimento</th>
+                <th class="acom2">Hora de Nascimento</th>
+                <th class="acom2">Tipo do Parto</th>
+                <th class="acom2">CPF Gestante</th>
+                <th class="acom2">Nº Berçário</th>
             </tr>
                 <?php
-                    while($row = $result->fetch_assoc()) {
+                    while($row = pg_fetch_assoc($result)) {
                 ?>
             <tr>
-                <td>
+                <td class="acom2">
                     <?php echo $row["reg_bebe"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["nome"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["peso"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php 
                         if($row["sexo"] == 0) {
                             echo "Masculino";
@@ -66,16 +68,16 @@ if(!$conn) {
                         }
                     ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["altura"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["data_nasc"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["hora_nasc"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php 
                         if($row["tipo_parto"] == 0) {
                             echo "Normal";
@@ -84,10 +86,10 @@ if(!$conn) {
                         }
                     ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["cpf_gestante"]; ?>
                 </td>
-                <td>
+                <td class="acom2">
                     <?php echo $row["num_bercario"]; ?>
                 </td>
             </tr>
@@ -102,6 +104,5 @@ if(!$conn) {
             ?>
         </table>
         </main>
-        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>

@@ -7,6 +7,7 @@ class Pessoa {
     private $parentesco;
     private $dataacomp;
     private $cpfgest;
+    private $error;
 
     public function __construct($n, $cpf, $d, $p, $gest) {
         $this->cpfacomp = $cpf;
@@ -14,6 +15,7 @@ class Pessoa {
         $this->parentesco = $p;
         $this->dataacomp = $d;
         $this->cpfgest = $gest;
+        $this->error = "";
     }
 
     public function save() {
@@ -23,15 +25,29 @@ class Pessoa {
             $msg = "Falha na conexão.";
         } else {
             $sql = "INSERT INTO pessoa (cpf, nome, parentesco, data_nasc, cpf_gestante) VALUES ('" . $this->cpfacomp . "','" . $this->nomeacomp . "','" . $this->parentesco . "','" . $this->dataacomp . "','" . $this->cpfgest . "')";
-        }
-
-        if(pg_query($conn, $sql)) {
-            $msg = "Dados Inseridos.";
-        } else {
-            die(pg_result_error($conn));
-        }
-
+            pg_query($conn, $sql);
+            $msg = "";
+        }   
+        
         return $msg;
+    }
+
+    public function check() {
+        $conn = Connection::getInstance();
+        $query = "SELECT cpf FROM pessoa WHERE cpf = '" . $this->cpfacomp . "'";
+
+        $result = pg_query($conn, $query);
+
+        if(!pg_fetch_assoc($result)) {
+            return TRUE;
+        } else {
+            $this->error = "CPF de Acompanhante já cadastrado.";
+            return FALSE;
+        }
+    }
+
+    public function getError() {
+        return $this->error;
     }
 }
 

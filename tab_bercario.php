@@ -23,27 +23,29 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Berçário</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Berçário</h4>
+        <a class="back" href="index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
-        <table style="width:50%">
+        <table class="visu_acom3">
             <tr>
-                <th>Número do Berçario</th>
-                <th>Número do Berço</th>
+                <th class="acom3">Número do Berçario</th>
+                <th class="acom3">Número do Berço</th>
             </tr>
                 <?php
-                    while($row = $result->fetch_assoc()) {
+                    while($row = pg_fetch_assoc($result)) {
                 ?>
             <tr>
-                <td>
+                <td class="acom3">
                     <?php echo $row["num_bercario"]; ?>
                 </td>
-                <td>
+                <td class="acom3">
                     <?php echo $row["num_berco"]; ?>
                 </td>
             </tr>
@@ -58,6 +60,5 @@ if(!$conn) {
             ?>
         </table>
         </main>
-        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>

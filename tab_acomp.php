@@ -15,7 +15,6 @@ if(!$conn) {
 } else {
     $sql = "SELECT * FROM pessoa";
     $result = pg_query($conn, $sql);
-
 ?>
 
 <!doctype html>
@@ -23,39 +22,41 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Acompanhante</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Acompanhante</h4>
+        <a class="back" href="index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
-        <table style="width:50%">
+        <table class="visu_acom">
             <tr>
-                <th>CPF</th>
-                <th>Nome</th>
-                <th>Parentesco</th>
-                <th>Data de Nascimento</th>
-                <th>CPF Gestante</th>
+                <th class="acom">CPF</th>
+                <th class="acom">Nome</th>
+                <th class="acom">Parentesco</th>
+                <th class="acom">Data de Nascimento</th>
+                <th class="acom">CPF Gestante</th>
             </tr>
                 <?php
-                    while($row = $result->fetch_assoc()) {
+                    while($row = pg_fetch_assoc($result)) {
                 ?>
             <tr>
-                <td>
+                <td class="acom">
                     <?php echo $row["cpf"]; ?>
                 </td>
-                <td>
+                <td class="acom">
                     <?php echo $row["nome"]; ?>
                 </td>
-                <td>
+                <td class="acom">
                     <?php echo $row["parentesco"]; ?>
                 </td>
-                <td>
+                <td class="acom">
                     <?php echo $row["data_nasc"]; ?>
                 </td>
-                <td>
+                <td class="acom">
                     <?php echo $row["cpf_gestante"]; ?>
                 </td>
             </tr>
@@ -70,6 +71,5 @@ if(!$conn) {
             ?>
         </table>
         </main>
-        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>

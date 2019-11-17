@@ -1,6 +1,11 @@
 <?php
 
-$msg = "";
+$msg1 = "";
+$msg2 = "";
+$msg3 = "";
+$msg4 = "";
+$msg5 = "";
+$msg6 = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -12,47 +17,52 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     spl_autoload_extensions('.class.php');
     spl_autoload_register('MyAutoLoad');
 
+    $nomemed = $_POST["nome_medico"];
+    $crm = $_POST["crm_medico"];
+
     $nomegest = $_POST["nome_gestante"];
     $cpfgest = $_POST["cpf_gestante"];
     $datagest = $_POST["nasc_gestante"];
     $telegest = $_POST["telefone"];
 
-    $nomemed = $_POST["nome_medico"];
-    $crm = $_POST["crm_medico"];
+    // $nomeacomp = $_POST["nome_acomp"];
+    // $cpfacomp = $_POST["cpf_acomp"];
+    // $dataacomp = $_POST["nasc_acomp"];
+    // $parentesco = $_POST["parentesco"];
 
-    $nomeacomp = $_POST["nome_acomp"];
-    $cpfacomp = $_POST["cpf_acomp"];
-    $dataacomp = $_POST["nasc_acomp"];
-    $parentesco = $_POST["parentesco"];
+    // $nomebebe = $_POST["nome_bebe"];
+    // $pesobebe = $_POST["peso_bebe"];
+    // $alturabebe = $_POST["altura_bebe"];
+    // $sexo_bebe = $_POST["sexo_bebe"];
+    // $nasc_bebe = $_POST["nasc_bebe"];
+    // $hora_bebe = $_POST["hora_bebe"];
+    // $tipo_parto = $_POST["tipo_parto"];
 
-    $nomebebe = $_POST["nome_bebe"];
-    $pesobebe = $_POST["peso_bebe"];
-    $alturabebe = $_POST["altura_bebe"];
-    $sexo_bebe = $_POST["sexo_bebe"];
-    $nasc_bebe = $_POST["nasc_bebe"];
-    $hora_bebe = $_POST["hora_bebe"];
-    $tipo_parto = $_POST["tipo_parto"];
-
-    $numbercario = $_POST["num_bercario"];
-    $numberco = $_POST["num_berco"];
+    // $numbercario = $_POST["num_bercario"];
+    // $numberco = $_POST["num_berco"];
 
     $med = new Medico($crm, $nomemed);
-    $msg = $med->save();
-
     $gest = new Gestante($cpfgest, $nomegest, $datagest, $telegest, $crm);
-    $msg = $gest->save();
-
     $pessoa = new Pessoa($nomeacomp, $cpfacomp, $dataacomp, $parentesco, $cpfgest);
-    $msg = $pessoa->save();
-
     $contato = new Contato($telegest, $cpfgest, $cpfacomp);
-    $msg = $contato->save();
-
     $bercario = new Bercario($numbercario, $numberco);
-    $msg = $bercario->save();
-
     $bebe = new Bebe($nomebebe, $pesobebe, $alturabebe, $sexo_bebe, $nasc_bebe, $hora_bebe, $tipo_parto, $cpfgest, $numbercario);
-    $msg = $bebe->save();
+
+    if($med->check() && $gest->check() && $pessoa->check() && $contato->check() && $bercario->check()) {
+        $msg1 = $med->save();
+        $msg2 = $gest->save();
+        $msg3 = $pessoa->save();
+        $msg4 = $contato->save();
+        $msg5 = $bercario->save();
+        $msg6 = $bebe->save();
+    } else {
+        $msg1 = $med->getError();
+        $msg2 = $gest->getError();
+        $msg3 = $pessoa->getError();
+        $msg4 = $contato->getError();
+        $msg5 = $bercario->getError();
+        $msg6 = $bebe->getError();
+    }
 
 
 }
@@ -64,72 +74,83 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <head>
         <meta charset="UTF-8">
         <title>Cadastro de Paciente</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Cadastro de Paciente</h4>
+        <a class="back" href="index.php">Voltar</a><br><br>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> ">
-            <h2> - Dados do Paciente</h2>
-                <h4>Nome do Paciente:</h4>
-                <input type="text" name="nome_gestante" placeholder="Nome Completo" required>
-                <h4>CPF do Paciente:</h4>
-                <input type="text" name="cpf_gestante" placeholder="CPF" required>
-                <h4>Data de Nascimento:</h4>
-                <input type="date" name="nasc_gestante" required>
-                <h4>Telefone para Contato:</h4>
-                <input type="text" name="telefone" placeholder="DDDXXXXXXXX" pattern="[0-9]{11}" required>
 
-            <h2> - Dados do Acompanhante</h2>
-                <h4>Nome do Acompanhante:</h4>
-                <input type="text" name="nome_acomp" placeholder="Nome Completo" required>
-                <h4>CPF do Acompanhante:</h4>
-                <input type="text" name="cpf_acomp" placeholder="CPF" required>
-                <h4>Data de Nascimento:</h4>
-                <input type="date" name="nasc_acomp" required>
-                <h4>Relação de Parentesco:</h4>
-                <input type="text" name="parentesco" placeholder="Parentesco" required>
+            <h3><?php if ($msg1 != "") echo $msg1 ?>
+            <h3><?php if ($msg2 != "") echo $msg2 ?>
+            <h3><?php if ($msg3 != "") echo $msg3 ?>
+            <h3><?php if ($msg4 != "") echo $msg4 ?>
+            <h3><?php if ($msg5 != "") echo $msg5 ?>
+            <h3><?php if ($msg6 != "") echo $msg6 ?>
 
-            <h2> - Dados do Médico Responsável</h2>
-                <h4>Nome do Médico:</h4>
-                <input type="text" name="nome_medico" placeholder="Nome do Médico" required>
-                <h4>Nº do CRM:</h4>
-                <input type="text" name="crm_medico" placeholder="CRM" required>
-            
-            <h2> - Dados do Recém Nascido </h2>
-                <h4>Nome do Recém Nascido:</h4>
-                <input type="text" name="nome_bebe" placeholder="Nome Completo" required>
-                <h4>Peso:</h4>
-                <input type="number" name="peso_bebe" placeholder="(em Kg)" step="0.1" required>
-                <h4>Altura:</h4>
-                <input type="number" name="altura_bebe" placeholder="(em cm)" step="0.1" required>
-                <h4>Sexo:</h4>
-                <select name="sexo_bebe" required>
+            <h2 class="enter3">Dados do Médico Responsável</h2>
+                <h4 class="enter">Nome do Médico:</h4>
+                <input type="text" name="nome_medico" class="enter2"  placeholder="Nome do Médico" required>
+                <h4 class="enter">Nº do CRM:</h4>
+                <input type="text" name="crm_medico"  class="enter2" placeholder="CRM" required>
+
+            <h2 class="enter3">Dados do Paciente</h2>
+                <h4 class="enter">Nome do Paciente:</h4>
+                <input type="text" name="nome_gestante" class="enter2" placeholder="Nome Completo" required>
+                <h4 class="enter">CPF do Paciente:</h4>
+                <input type="text" name="cpf_gestante" class="enter2"  placeholder="CPF" required>
+                <h4 class="enter">Data de Nascimento:</h4>
+                <input type="date" name="nasc_gestante" class="enter2"  required>
+                <h4 class="enter">Telefone para Contato:</h4>
+                <input type="text" name="telefone"  class="enter2" placeholder="DDDXXXXXXXX" pattern="[0-9]{11}" required>
+
+            <h2 class="enter3">Dados do Acompanhante</h2>
+                <h4 class="enter">Nome do Acompanhante:</h4>
+                <input type="text" name="nome_acomp" class="enter2"  placeholder="Nome Completo" required>
+                <h4 class="enter">CPF do Acompanhante:</h4>
+                <input type="text" name="cpf_acomp"  class="enter2" placeholder="CPF" required>
+                <h4 class="enter">Data de Nascimento:</h4>
+                <input type="date" name="nasc_acomp" class="enter2"required>
+                <h4 class="enter">Relação de Parentesco:</h4>
+                <input type="text" name="parentesco"  class="enter2" placeholder="Parentesco" required>
+
+
+            <h2 class="enter3">Dados do Recém Nascido </h2>
+                <h4 class="enter">Nome do Recém Nascido:</h4>
+                <input type="text" name="nome_bebe"  class="enter2" placeholder="Nome Completo" required>
+                <h4 class="enter">Peso:</h4>
+                <input type="number" name="peso_bebe"  class="enter2" placeholder="(em Kg)" step="0.1" required>
+                <h4 class="enter">Altura:</h4>
+                <input type="number" name="altura_bebe"  class="enter2" placeholder="(em cm)" step="0.1" required>
+                <h4 class="enter">Sexo:</h4>
+                <select name="sexo_bebe"  class="enter2" required>
                     <option value="" disabled selected> --Selecione-- </option>
                     <option value="0"> Masculino </option>
                     <option value="1"> Feminino </option>
                 </select>
-                <h4>Data de Nascimento:</h4>
-                <input type="date" name="nasc_bebe" required>
-                <h4>Hora de Nascimento:</h4>
-                <input type="time" name="hora_bebe" required>
-                <h4>Tipo de Parto:</h4>
-                <select name="tipo_parto" required>
+                <h4 class="enter">Data de Nascimento:</h4>
+                <input type="date" name="nasc_bebe" class="enter2"  required>
+                <h4 class="enter">Hora de Nascimento:</h4>
+                <input type="time" name="hora_bebe" class="enter2"  required>
+                <h4 class="enter">Tipo de Parto:</h4>
+                <select name="tipo_parto"  class="enter2" required>
                     <option value="" disabled selected> --Selecione-- </option>
                     <option value="0"> Normal </option>
                     <option value="1"> Cesárea </option>
                 </select>
-                <h4>Nº Berçário:</h4>
-                <input type="number" name="num_bercario" required>
-                <h4>Nº Berço:</h4>
-                <input type="number" name="num_berco" required>
+                <h4 class="enter">Nº Berçário:</h4>
+                <input type="number" name="num_bercario" class="enter2"  required>
+                <h4 class="enter">Nº Berço:</h4>
+                <input type="number" name="num_berco"  class="enter2" required>
                 
             <br><br><br>
-            <input type="submit" name="enviar" value="Cadastrar">
+            <input type="submit" name="enviar"  class="search" value="Cadastrar">
             <br><br>
                 
             </form>
         </main>
-        <a href="index.php">Voltar</a><br><br>
+        <a class="back" href="index.php">Voltar</a><br><br>
     </body>
 </html>

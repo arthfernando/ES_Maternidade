@@ -22,27 +22,29 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Médico</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Médico</h4>
+        <a class="back" href="index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
-        <table style="width:50%">
+        <table class="visu_acom6">
             <tr>
-                <th>CRM</th>
-                <th>Nome</th>
+                <th class="acom6">CRM</th>
+                <th class="acom6">Nome</th>
             </tr>
                 <?php
-                    while($row = $result->fetch_assoc()) {
+                    while($row = pg_fetch_assoc($result)) {
                 ?>
             <tr>
-                <td>
+                <td class="acom6">
                     <?php echo $row["crm"]; ?>
                 </td>
-                <td>
+                <td class="acom6">
                     <?php echo $row["nome"]; ?>
                 </td>
             </tr>
@@ -57,6 +59,5 @@ if(!$conn) {
             ?>
         </table>
         </main>
-        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>

@@ -3,10 +3,12 @@
 class Medico {
     private $nomemed;
     private $crm;
+    private $error;
 
     public function __construct($c, $n) {
         $this->crm = $c;
         $this->nomemed = $n;
+        $this->error = "";
     }
 
     public function save() {
@@ -16,23 +18,29 @@ class Medico {
             $msg = "Falha na conexão.";
         } else {
             $sql = "INSERT INTO medico (crm, nome) VALUES ('" . $this->crm . "','" . $this->nomemed . "')";
-        }
-
-        if(pg_query($conn, $sql)) {
-            $msg = "Dados Inseridos.";
-        } else {
-            die(pg_result_error($conn));
-        }
-
+            pg_query($conn, $sql);
+            $msg = "";
+        }   
+        
         return $msg;
     }
 
-    public function getCRM() {
-        return $this->crm;
+    public function check() {
+        $conn = Connection::getInstance();
+        $query = "SELECT crm FROM medico WHERE crm = '" . $this->crm . "'";
+
+        $result = pg_query($conn, $query);
+
+        if(!pg_fetch_assoc($result)) {
+            return TRUE;
+        } else {
+            $this->error = "CRM já cadastrado.";
+            return FALSE;
+        }
     }
 
-    public function getNome() {
-        return $this->nomemed;
+    public function getError() {
+        return $this->error;
     }
 }
 

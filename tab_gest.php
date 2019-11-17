@@ -23,39 +23,41 @@ if(!$conn) {
     <head>
         <meta charset="UTF-8">
         <title>Informações: Gestante</title>
+        <link rel="stylesheet" type="text/css" href="Style/style.css">
     </head>
 
     <body>
-    <a href="index.php">Voltar</a><br><br>
         <main>
+        <h4 class="index2">Maternidade - Gestante</h4>
+        <a class="back" href="index.php">Voltar</a><br><br><br><br>
         <?php
             if(pg_num_rows($result) > 0) {
         ?>
-        <table style="width:50%">
+        <table class="visu_acom5">
             <tr>
-                <th>CPF</th>
-                <th>Nome</th>
-                <th>Data de Nascimento</th>
-                <th>Telefone</th>
-                <th>CRM Médico</th>
+                <th class="acom5">CPF</th>
+                <th class="acom5">Nome</th>
+                <th class="acom5">Data de Nascimento</th>
+                <th class="acom5">Telefone</th>
+                <th class="acom5">CRM Médico</th>
             </tr>
                 <?php
-                    while($row = $result->fetch_assoc()) {
+                   while($row = pg_fetch_assoc($result)) {
                 ?>
             <tr>
-                <td>
+                <td class="acom5">
                     <?php echo $row["cpf"]; ?>
                 </td>
-                <td>
+                <td class="acom5">
                     <?php echo $row["nome"]; ?>
                 </td>
-                <td>
+                <td class="acom5">
                     <?php echo $row["data_nasc"]; ?>
                 </td>
-                <td>
+                <td class="acom5">
                     <?php echo $row["telefone"]; ?>
-                </td>
-                <td>
+                </td class="acom5">
+                <td class="acom5">
                     <?php echo $row["crm_medico"]; ?>
                 </td>
             </tr>
@@ -70,6 +72,5 @@ if(!$conn) {
             ?>
         </table>
         </main>
-        <a href="index.php">Voltar</a><br><br>
     </body>
 </html>
